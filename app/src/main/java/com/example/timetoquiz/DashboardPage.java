@@ -14,7 +14,6 @@ import java.util.List;
 public class DashboardPage extends AppCompatActivity {
 
     private GridView DashboardGrid;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
