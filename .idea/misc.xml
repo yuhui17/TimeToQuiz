@@ -7,6 +7,7 @@
         <entry key="..\:/TimeToQuiz/app/src/main/res/drawable/button_rounded_rectangle.xml" value="0.1605" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/drawable/gradient_background.xml" value="0.2" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1265" />
+        <entry key="..\:/TimeToQuiz/app/src/main/res/drawable/progress_background.xml" value="0.188" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/layout/activity_dashboard.xml" value="0.18568840579710144" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/layout/activity_login_page.xml" value="0.2" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/layout/activity_main.xml" value="0.2" />
@@ -14,6 +15,7 @@
         <entry key="..\:/TimeToQuiz/app/src/main/res/layout/activity_quiz_question_page.xml" value="0.176" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/layout/activity_score_page.xml" value="0.176" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/layout/dashboard_item_layout.xml" value="0.18568840579710144" />
+        <entry key="..\:/TimeToQuiz/app/src/main/res/layout/loading_progressbar.xml" value="0.25" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/layout/quizlist_item_layout.xml" value="0.115625" />
         <entry key="..\:/TimeToQuiz/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.174" />
       </map>

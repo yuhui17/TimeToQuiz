@@ -48,11 +48,13 @@ public class DashboardGridAdapter extends BaseAdapter {
             view = convertView;
         }
 
+        //Trigger When Click the Subject
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(parent.getContext(), QuizListPage.class);
-                intent.putExtra("SUBJECT", DashboardList.get(position));
+                intent.putExtra("SUBJECT", DashboardList.get(position)); //pass the subject name
+                intent.putExtra("SUBJECT_ID", position+1);  //pass  the subject_id
                 parent.getContext().startActivity(intent);
             }
         });
