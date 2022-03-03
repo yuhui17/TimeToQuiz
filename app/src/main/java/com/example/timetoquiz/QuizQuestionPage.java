@@ -1,8 +1,13 @@
 package com.example.timetoquiz;
 
+import static com.example.timetoquiz.QuizListPage.subject_id;
+import static com.example.timetoquiz.R.id.quiz_option1;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -10,9 +15,18 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +39,10 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
     private CountDownTimer countDownTimer;
     private int questionNumber;
     private int score;
+    private FirebaseFirestore firebaseFirestore;
+    private int quizNo;
+
+    private Dialog progressloadingDialog;
 
     //***if any changes made need to change both of this***
     private String TimerSec = "25";    //set time text in counter
@@ -51,6 +69,18 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
         quiz_option4.setOnClickListener(this);
 
         quiz_Timer.setText(String.valueOf(TimerSec));
+
+        quizNo = getIntent().getIntExtra("QUIZNO", 1);
+
+        progressloadingDialog = new Dialog(QuizQuestionPage.this);
+        progressloadingDialog.setContentView(R.layout.loading_progressbar);
+        progressloadingDialog.setCancelable(false);
+        progressloadingDialog.getWindow().setBackgroundDrawableResource(R.drawable.progress_background);
+        progressloadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        progressloadingDialog.show();
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         getQuizQuestionsList();
     }
 
@@ -58,19 +88,49 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
     {
         questionList = new ArrayList<>();
 
-        //add question
-        questionList.add(new Question("Question 1", "A", "B", "C","C", 2));
-        questionList.add(new Question("Question 2", "halo", "B", "ta","C", 2));
-        questionList.add(new Question("Question 3", "A", "ni", "C","wo", 2));
-        questionList.add(new Question("Question 4", "A", "lol", "C","777", 2));
-        questionList.add(new Question("Question 5", "A", "B", "test","C", 2));
+//        //add question [Demo Use]
+//        questionList.add(new Question("Question 1", "A", "B", "C","C", 2));
+//        questionList.add(new Question("Question 2", "halo", "B", "ta","C", 2));
+//        questionList.add(new Question("Question 3", "A", "ni", "C","wo", 2));
+//        questionList.add(new Question("Question 4", "A", "lol", "C","777", 2));
+//        questionList.add(new Question("Question 5", "A", "B", "test","C", 2));
 
-        setQuestion();
+        firebaseFirestore.collection("QUIZ").document("SUB" + String.valueOf(subject_id))
+                .collection("QUIZ" + String.valueOf(quizNo))
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    QuerySnapshot questions = task.getResult();
+
+                    for(QueryDocumentSnapshot doc : questions)
+                    {
+                        questionList.add(new Question(doc.getString("QUESTION"),
+                                doc.getString("OPTION1"),
+                                doc.getString("OPTION2"),
+                                doc.getString("OPTION3"),
+                                doc.getString("OPTION4"),
+                                Integer.valueOf(doc.getString("ANSWER"))
+                        ));
+                    }
+
+                    setQuestion();
+                }
+                else
+                {
+                    Toast.makeText(QuizQuestionPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+                progressloadingDialog.cancel();
+            }
+        });
+
     }
 
     private void setQuestion()
     {
-        quiz_Timer.setText(String.valueOf(25));
+        quiz_Timer.setText(TimerSec);
 
         quiz_Question.setText(questionList.get(0).getQuestion());
         quiz_option1.setText(questionList.get(0).getOption1());
@@ -99,7 +159,7 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onFinish() {
-
+                changeQuestion();
             }
         };
 
@@ -130,6 +190,7 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
                 break;
 
             default:
+                break;
         }
 
         countDownTimer.cancel();
@@ -234,12 +295,16 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
                                     break;
                                 case 1:
                                     ((Button)view).setText(questionList.get(questionNumber).getOption1());
+                                    break;
                                 case 2:
                                     ((Button)view).setText(questionList.get(questionNumber).getOption2());
+                                    break;
                                 case 3:
                                     ((Button)view).setText(questionList.get(questionNumber).getOption3());
+                                    break;
                                 case 4:
                                     ((Button)view).setText(questionList.get(questionNumber).getOption4());
+                                    break;
                             }
 
                             //color back all the option [Current color: #FFA521]

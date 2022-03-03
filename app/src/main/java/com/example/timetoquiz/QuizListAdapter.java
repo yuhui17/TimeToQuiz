@@ -48,6 +48,7 @@ public class QuizListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(parent.getContext(), QuizQuestionPage.class);
+                intent.putExtra("QUIZNO", position+1);
                 parent.getContext().startActivity(intent);
             }
         });

@@ -27,7 +27,7 @@ public class QuizListPage extends AppCompatActivity {
 
     private GridView quizlist_grid;
     private FirebaseFirestore firebaseFirestore;
-    private int subject_id;
+    public static int subject_id;
     private Dialog progressloadingDialog;
 
     @Override
