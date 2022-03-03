@@ -120,14 +120,14 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/quiz_CountDown"
+        android:id="@+id/quiz_Timer"
         android:layout_width="63dp"
         android:layout_height="65dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/icon_countdownclock"
         android:gravity="center"
-        android:text="25"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
