@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "677035041115",
+    "project_id": "ttqdb-4e52f",
+    "storage_bucket": "ttqdb-4e52f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677035041115:android:78013aa2414111f30b7a7e",
+        "android_client_info": {
+          "package_name": "com.example.timetoquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677035041115-vp9b6mf9j94o5e4s70k3u5hdgrm0c11m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.timetoquiz",
+            "certificate_hash": "ce951a722f8093ac849f1740fd0675ad26265d99"
+          }
+        },
+        {
+          "client_id": "677035041115-egudoi59oopnp9jkjtei75l0479svqc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASqVLxiYk7kcW9b_aj6EQtLp1ZZHjF_mc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677035041115-egudoi59oopnp9jkjtei75l0479svqc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

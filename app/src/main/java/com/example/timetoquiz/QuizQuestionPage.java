@@ -23,11 +23,12 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
     private Button quiz_option1, quiz_option2, quiz_option3, quiz_option4;
     private List<Question> questionList;
     private CountDownTimer countDownTimer;
-    int questionNumber;
+    private int questionNumber;
+    private int score;
 
     //***if any changes made need to change both of this***
-    String TimerSec = "25";    //set time text in counter
-    int ActualTimerSec = 25000;    //set the actual counter
+    private String TimerSec = "25";    //set time text in counter
+    private int ActualTimerSec = 25000;    //set the actual counter
 
 
     @Override
@@ -142,6 +143,7 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
             //Correct Answer
             //color green correct answer
             ((Button)view).setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            score++;
         }
         else
         {
@@ -199,8 +201,15 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
          {
              //Go to Score Activity
              Intent intent = new Intent(QuizQuestionPage.this, ScorePage.class);
+
+             //passing the score to ScorePage
+             intent.putExtra("SCORE", String.valueOf(score) + "/" + String.valueOf(questionList.size()));
+
+             //clear all activity after done the quiz
+             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
              startActivity(intent);
-             QuizQuestionPage.this.finish();
+//             QuizQuestionPage.this.finish();
          }
     }
 
@@ -254,5 +263,13 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
                     }
                 });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        //stop the timer when click the phone "back" button
+        countDownTimer.cancel();
     }
 }
