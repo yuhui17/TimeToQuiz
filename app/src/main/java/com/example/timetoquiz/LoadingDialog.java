@@ -33,6 +33,6 @@ public class LoadingDialog {
             public void run() {
                 dialog.dismiss();
             }
-        }, 3000);
+        }, 1500);
     }
 }
