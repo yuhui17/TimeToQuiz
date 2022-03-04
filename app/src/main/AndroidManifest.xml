@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TimeToQuiz">
         <activity
+            android:name=".TeacherDashboardPage"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPage"
+            android:exported="false" />
+        <activity
             android:name=".ScorePage"
             android:exported="false" />
         <activity

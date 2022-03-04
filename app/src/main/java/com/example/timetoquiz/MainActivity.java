@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView image_ttq;
     TextView text_WelcomeText;
 
-    public static List<String> subjectList = new ArrayList<>();
+//    public static List<String> subjectList = new ArrayList<>();
 
     //database
-    private FirebaseFirestore fireStore;
+//    private FirebaseFirestore fireStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +54,13 @@ public class MainActivity extends AppCompatActivity {
         image_ttq.setAnimation(top_animation);
         text_WelcomeText.setAnimation(bottom_animation);
 
-        fireStore = FirebaseFirestore.getInstance();
+//        fireStore = FirebaseFirestore.getInstance();
+
+//        loadDataFromFireStore();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                loadDataFromFireStore();
-
                 Intent intent = new Intent(MainActivity.this, LoginPage.class);
                 startActivity(intent);
                 finish();
@@ -69,41 +68,41 @@ public class MainActivity extends AppCompatActivity {
         },SPLASH_SCREEN);
     }
 
-    private void loadDataFromFireStore()
-    {
-        subjectList.clear();
-
-        fireStore.collection("QUIZ").document("SUBJECT").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                if(task.isSuccessful())
-                {
-                    DocumentSnapshot documentSnapshot = task.getResult();
-
-                    if(documentSnapshot.exists())
-                    {
-                        long count = (long)documentSnapshot.get("COUNT");
-
-                        //loop to get the subject name
-                        for(int i = 1; i <= count; i++)
-                        {
-                            String subjectName = documentSnapshot.getString("SUB" + String.valueOf(i)); // ex. SUB1, SUB2
-                            subjectList.add(subjectName);
-                        }
-                    }
-                    else
-                    {
-                        //no subject found
-                        Toast.makeText(MainActivity.this, "The Subject List Is Empty!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }
-                else
-                {
-                    Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+//    private void loadDataFromFireStore()
+//    {
+//        subjectList.clear();
+//
+//        fireStore.collection("QUIZ").document("SUBJECT").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//
+//                if(task.isSuccessful())
+//                {
+//                    DocumentSnapshot documentSnapshot = task.getResult();
+//
+//                    if(documentSnapshot.exists())
+//                    {
+//                        long count = (long)documentSnapshot.get("COUNT");
+//
+//                        //loop to get the subject name
+//                        for(int i = 1; i <= count; i++)
+//                        {
+//                            String subjectName = documentSnapshot.getString("SUB" + String.valueOf(i)); // ex. SUB1, SUB2
+//                            subjectList.add(subjectName);
+//                        }
+//                    }
+//                    else
+//                    {
+//                        //no subject found
+//                        Toast.makeText(MainActivity.this, "The Subject List Is Empty!", Toast.LENGTH_SHORT).show();
+//                        finish();
+//                    }
+//                }
+//                else
+//                {
+//                    Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
 }
