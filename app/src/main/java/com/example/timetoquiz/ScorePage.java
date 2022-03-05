@@ -1,5 +1,7 @@
 package com.example.timetoquiz;
 
+import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -28,6 +30,7 @@ public class ScorePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ScorePage.this, DashboardPage.class);
+
                 ScorePage.this.startActivity(intent);
                 ScorePage.this.finish();
             }

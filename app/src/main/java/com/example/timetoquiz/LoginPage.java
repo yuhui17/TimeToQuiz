@@ -124,7 +124,7 @@ public class LoginPage extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), DashboardPage.class));
                 }
 
-//                finish();
+//                LoginPage.this.finish();
             }
         });
     }
@@ -181,7 +181,7 @@ public class LoginPage extends AppCompatActivity {
                     {
                         //no subject found
                         Toast.makeText(LoginPage.this, "The Subject List Is Empty!", Toast.LENGTH_SHORT).show();
-                        finish();
+//                        finish();
                     }
                 }
                 else

@@ -11,7 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -63,42 +66,53 @@ public class DashboardPage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        if(item.getItemId() == android.R.id.home)
+        {
+//            FirebaseAuth.getInstance().signOut();
+//
+//            DashboardPage.this.finish();
 
-        builder.setTitle("Logout Confirmation");
-        builder.setMessage("Are you sure you want to logout???");
-
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-
-                //Do Logout Process
-                if(item.getItemId() == android.R.id.home)
-                {
-                    FirebaseAuth.getInstance().signOut();
-
-                    startActivity(new Intent(getApplicationContext(), DashboardPage.class));
-                    DashboardPage.this.finish();
-                }
-
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                //Do nothing
-                dialog.dismiss();
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
+            showAlertDialogLogOut();
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void showAlertDialogLogOut() {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Logout Confirmation");
+        dialog.setMessage("You want to logout now?");
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //logout process
+                FirebaseAuth.getInstance().signOut();
+
+//                Intent intent = new Intent(DashboardPage.this, LoginPage.class);
+//                startActivity(intent);
+
+                DashboardPage.this.finish();
+
+                dialog.dismiss();
+            }
+        });
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        showAlertDialogLogOut();
+    }
 }

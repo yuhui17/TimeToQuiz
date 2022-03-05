@@ -266,11 +266,12 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
              //passing the score to ScorePage
              intent.putExtra("SCORE", String.valueOf(score) + "/" + String.valueOf(questionList.size()));
 
-             //clear all activity after done the quiz
+//             //clear all activity after done the quiz
              intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
              startActivity(intent);
-//             QuizQuestionPage.this.finish();
+
+             QuizQuestionPage.this.finish();
          }
     }
 

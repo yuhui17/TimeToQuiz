@@ -90,6 +90,7 @@ public class QuizListPage extends AppCompatActivity {
                         Toast.makeText(QuizListPage.this, "The Quizzes List Is Empty!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
+
                 }
                 else
                 {
