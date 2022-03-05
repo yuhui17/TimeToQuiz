@@ -91,10 +91,11 @@ public class DashboardPage extends AppCompatActivity {
                 //logout process
                 FirebaseAuth.getInstance().signOut();
 
-//                Intent intent = new Intent(DashboardPage.this, LoginPage.class);
-//                startActivity(intent);
+                Intent intent = new Intent(DashboardPage.this, LoginPage.class);
+                startActivity(intent);
 
-                DashboardPage.this.finish();
+//                DashboardPage.this.finish();
+                finishAffinity();
 
                 dialog.dismiss();
             }

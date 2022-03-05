@@ -29,10 +29,16 @@ public class ScorePage extends AppCompatActivity {
         button_Completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ScorePage.this, DashboardPage.class);
+                if (button_Completed.isEnabled()) {
+                    button_Completed.setEnabled(false);
 
-                ScorePage.this.startActivity(intent);
-                ScorePage.this.finish();
+                    Intent intent = new Intent(ScorePage.this, DashboardPage.class);
+
+                    ScorePage.this.startActivity(intent);
+//                    ScorePage.this.finish();
+                    finishAffinity();
+                }
+
             }
         });
     }

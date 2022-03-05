@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.app.Dialog;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -169,24 +170,45 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
 
+        disableAllOptionButton();
+
         int selectedOption = 0;
 
         switch (view.getId())
         {
             case R.id.quiz_option1:
-                selectedOption = 1;
+
+                if (quiz_option1.isEnabled()) {
+                    quiz_option1.setEnabled(false);
+
+                    selectedOption = 1;
+                }
                 break;
 
             case R.id.quiz_option2:
-                selectedOption = 2;
+
+                if (quiz_option2.isEnabled()) {
+                    quiz_option2.setEnabled(false);
+
+                    selectedOption = 2;
+                }
                 break;
 
             case R.id.quiz_option3:
-                selectedOption = 3;
+
+                if (quiz_option3.isEnabled()) {
+                    quiz_option3.setEnabled(false);
+
+                    selectedOption = 3;
+                }
                 break;
 
             case R.id.quiz_option4:
-                selectedOption = 4;
+                if (quiz_option4.isEnabled()) {
+                    quiz_option4.setEnabled(false);
+
+                    selectedOption = 4;
+                }
                 break;
 
             default:
@@ -195,6 +217,22 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
 
         countDownTimer.cancel();
         checkCorrectAnswer(selectedOption, view);
+    }
+
+    private void disableAllOptionButton()
+    {
+        quiz_option1.setEnabled(false);
+        quiz_option2.setEnabled(false);
+        quiz_option3.setEnabled(false);
+        quiz_option4.setEnabled(false);
+    }
+
+    private void enableAllOptionButton()
+    {
+        quiz_option1.setEnabled(true);
+        quiz_option2.setEnabled(true);
+        quiz_option3.setEnabled(true);
+        quiz_option4.setEnabled(true);
     }
 
     private void checkCorrectAnswer(int selectedOption, View view)
@@ -242,6 +280,9 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
 
     private void changeQuestion()
     {
+        //enable back the button
+        enableAllOptionButton();
+
          if(questionNumber < questionList.size()-1)
          {
              questionNumber++;
