@@ -57,6 +57,9 @@ public class LoginPage extends AppCompatActivity {
         text_LoginPassword = findViewById(R.id.text_LoginPassword);
         text_LoginEmail = findViewById(R.id.text_LoginEmail);
 
+        text_LoginEmail.setText("");
+        text_LoginPassword.setText("");
+
         //Login button
         button_Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,26 +70,32 @@ public class LoginPage extends AppCompatActivity {
 
                 if(valid == true)
                 {
-                    loadingDialog.startLoadingDialog();
+                    try{
+                        loadingDialog.startLoadingDialog();
 
-                    loadDataFromFireStore(); //loading SUBJECT
+                        loadDataFromFireStore(); //loading SUBJECT
 
-                    firebaseAuth.signInWithEmailAndPassword(text_LoginEmail.getText().toString(), text_LoginPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            Toast.makeText(LoginPage.this, "Login Successfully.", Toast.LENGTH_SHORT).show();
+                        firebaseAuth.signInWithEmailAndPassword(text_LoginEmail.getText().toString(), text_LoginPassword.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                Toast.makeText(LoginPage.this, "Login Successfully.", Toast.LENGTH_SHORT).show();
 
-                            checkUserAccessLevel(authResult.getUser().getUid());
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(LoginPage.this, "Login failed, Please Try Again.", Toast.LENGTH_SHORT).show();
+                                checkUserAccessLevel(authResult.getUser().getUid());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(LoginPage.this, "Login failed, Please Try Again.", Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
-
-                    loadingDialog.dismissDialog();
+                            }
+                        });
+                    }catch (Exception ex)
+                    {
+                        Toast.makeText(LoginPage.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }finally
+                    {
+                        loadingDialog.dismissDialog();
+                    }
                 }
 
             }
