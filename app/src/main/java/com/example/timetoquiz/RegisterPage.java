@@ -31,7 +31,7 @@ public class RegisterPage extends AppCompatActivity {
     Button button_Register;
     private Dialog progressloadingDialog;
 
-    private boolean valid = true;
+    private boolean valid = false;
 
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
@@ -54,6 +54,10 @@ public class RegisterPage extends AppCompatActivity {
 
         button_Register = findViewById(R.id.button_Register);
 
+        text_Nickname.setText("");
+        text_Email.setText("");
+        text_Password.setText("");
+
         button_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,46 +67,54 @@ public class RegisterPage extends AppCompatActivity {
 
                 if(valid)
                 {
-                    loadingDialog.startLoadingDialog();
+                    try{
+                        loadingDialog.startLoadingDialog();
 
-                    firebaseAuth.createUserWithEmailAndPassword(text_Email.getText().toString(), text_Password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            //register successful
-                            Toast.makeText(RegisterPage.this, "Account Register Successfully", Toast.LENGTH_SHORT).show();
+                        firebaseAuth.createUserWithEmailAndPassword(text_Email.getText().toString(), text_Password.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                //register successful
+                                Toast.makeText(RegisterPage.this, "Account Register Successfully", Toast.LENGTH_SHORT).show();
 
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                            DocumentReference documentReference = firebaseFirestore.collection("Users").document(user.getUid());
-                            Map<String, Object> userInfo = new HashMap<>();
-                            userInfo.put("NICKNAME", text_Nickname.getText().toString());
-                            userInfo.put("EMAIL", text_Nickname.getText().toString());
+                                DocumentReference documentReference = firebaseFirestore.collection("Users").document(user.getUid());
+                                Map<String, Object> userInfo = new HashMap<>();
+                                userInfo.put("NICKNAME", text_Nickname.getText().toString());
+                                userInfo.put("EMAIL", text_Nickname.getText().toString());
 
-                            if(checkbox_RegisterAsTeacher.isChecked())
-                            {
-                                //specify "is teacher"
-                                userInfo.put("isTeacher", "1");
+                                if(checkbox_RegisterAsTeacher.isChecked())
+                                {
+                                    //specify "is teacher"
+                                    userInfo.put("isTeacher", "1");
+                                }
+                                else
+                                {
+                                    //specify "is student"
+                                    userInfo.put("isStudent", "1");
+                                }
+
+                                documentReference.set(userInfo);
+
+                                startActivity(new Intent(getApplicationContext(), LoginPage.class));
+                                finish();
                             }
-                            else
-                            {
-                                //specify "is student"
-                                userInfo.put("isStudent", "1");
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //register failed
+                                Toast.makeText(RegisterPage.this, "Account Register Failed", Toast.LENGTH_SHORT).show();
                             }
+                        });
+                    }catch (Exception ex)
+                    {
+                        Toast.makeText(RegisterPage.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    finally
+                    {
+                        loadingDialog.dismissDialog();
+                    }
 
-                            documentReference.set(userInfo);
-
-                            startActivity(new Intent(getApplicationContext(), LoginPage.class));
-                            finish();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            //register failed
-                            Toast.makeText(RegisterPage.this, "Account Register Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    loadingDialog.dismissDialog();
                 }
             }
         });
