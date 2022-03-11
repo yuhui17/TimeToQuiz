@@ -13,11 +13,11 @@ import java.util.Random;
 
 public class DashboardGridAdapter extends BaseAdapter {
 
-    public DashboardGridAdapter(List<String> dashboardList) {
+    public DashboardGridAdapter(List<SubjectModel> dashboardList) {
         this.DashboardList = dashboardList;
     }
 
-    private List<String> DashboardList;
+    private List<SubjectModel> DashboardList;
 
     @Override
     public int getCount() {
@@ -53,13 +53,16 @@ public class DashboardGridAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(parent.getContext(), QuizListPage.class);
-                intent.putExtra("SUBJECT", DashboardList.get(position)); //pass the subject name
-                intent.putExtra("SUBJECT_ID", position+1);  //pass  the subject_id
+//                intent.putExtra("SUBJECT", DashboardList.get(position).getName()); //pass the subject name
+//                intent.putExtra("SUBJECT_ID", position+1);  //pass  the subject_id
+
+                //directly use the teacher page global variable
+                TeacherDashboardPage.selected_sub_index = position;
                 parent.getContext().startActivity(intent);
             }
         });
 
-        ((TextView) view.findViewById(R.id.quizName)).setText(DashboardList.get(position));
+        ((TextView) view.findViewById(R.id.quizName)).setText(DashboardList.get(position).getName());
 
         //color all textview with random color
         Random random = new Random();

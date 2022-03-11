@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.View;
+
+import androidx.appcompat.view.menu.ListMenuItemView;
+import androidx.appcompat.view.menu.MenuView;
 
 public class LoadingDialog {
 
@@ -33,6 +37,6 @@ public class LoadingDialog {
             public void run() {
                 dialog.dismiss();
             }
-        }, 1500);
+        }, 1000);
     }
 }

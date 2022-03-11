@@ -11,23 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DashboardPage extends AppCompatActivity {
 
@@ -38,14 +27,14 @@ public class DashboardPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        Toolbar Toolbar = findViewById(R.id.Toolbar);
+        Toolbar Toolbar = findViewById(R.id.Toolbar_AddQuestionPage);
         setSupportActionBar(Toolbar);
         getSupportActionBar().setTitle("Dashboard");
 
         //toolbar go back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DashboardGrid = findViewById(R.id.DashboardGridView);
+        DashboardGrid = findViewById(R.id.recyclerview_QuestionList);
 
 //        //Demo Use
 //        List<String> QuizList = new ArrayList<>();

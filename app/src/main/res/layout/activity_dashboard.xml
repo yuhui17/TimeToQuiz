@@ -8,14 +8,14 @@
     tools:context=".DashboardPage">
 
    <androidx.appcompat.widget.Toolbar
-       android:id="@+id/Toolbar"
+       android:id="@+id/Toolbar_AddQuestionPage"
        android:layout_width="match_parent"
        android:layout_height="?attr/actionBarSize"
        android:background="@drawable/gradient_background"
        />
 
     <GridView
-        android:id="@+id/DashboardGridView"
+        android:id="@+id/recyclerview_QuestionList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

@@ -39,7 +39,7 @@ public class LoginPage extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
 
-    public static List<String> subjectList = new ArrayList<>();
+    public static List<SubjectModel> subjectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,8 +182,10 @@ public class LoginPage extends AppCompatActivity {
                         //loop to get the subject name
                         for(int i = 1; i <= count; i++)
                         {
-                            String subjectName = documentSnapshot.getString("SUB" + String.valueOf(i)); // ex. SUB1, SUB2
-                            subjectList.add(subjectName);
+                            String subjectName = documentSnapshot.getString("SUB" + String.valueOf(i) + "_NAME");
+                            String subId = documentSnapshot.getString("SUB" + String.valueOf(i) + "_ID");
+
+                            subjectList.add(new SubjectModel(subId, subjectName, "0", "1"));
                         }
                     }
                     else

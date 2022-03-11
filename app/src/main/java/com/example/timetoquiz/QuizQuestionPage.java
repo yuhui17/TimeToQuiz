@@ -1,20 +1,22 @@
 package com.example.timetoquiz;
 
-import static com.example.timetoquiz.QuizListPage.subject_id;
-import static com.example.timetoquiz.R.id.quiz_option1;
+import static com.example.timetoquiz.LoginPage.subjectList;
+import static com.example.timetoquiz.TeacherDashboardPage.selected_sub_index;
+import static com.example.timetoquiz.TeacherQuizListPage.quizzesIds;
+import static com.example.timetoquiz.TeacherQuizListPage.selected_quiz_index;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.app.Dialog;
-import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -22,8 +24,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,6 +33,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class QuizQuestionPage extends AppCompatActivity implements View.OnClickListener{
 
@@ -40,10 +43,11 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
     private CountDownTimer countDownTimer;
     private int questionNumber;
     private int score;
-    private FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firestore;
     private int quizNo;
+    LoadingDialog loadingDialog = new LoadingDialog(this);
 
-    private Dialog progressloadingDialog;
+//    private Dialog progressloadingDialog;
 
     //***if any changes made need to change both of this***
     private String TimerSec = "25";    //set time text in counter
@@ -73,60 +77,76 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
 
         quizNo = getIntent().getIntExtra("QUIZNO", 1);
 
-        progressloadingDialog = new Dialog(QuizQuestionPage.this);
-        progressloadingDialog.setContentView(R.layout.loading_progressbar);
-        progressloadingDialog.setCancelable(false);
-        progressloadingDialog.getWindow().setBackgroundDrawableResource(R.drawable.progress_background);
-        progressloadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        progressloadingDialog.show();
+//        progressloadingDialog = new Dialog(QuizQuestionPage.this);
+//        progressloadingDialog.setContentView(R.layout.loading_progressbar);
+//        progressloadingDialog.setCancelable(false);
+//        progressloadingDialog.getWindow().setBackgroundDrawableResource(R.drawable.progress_background);
+//        progressloadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        progressloadingDialog.show();
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+
+        questionList = new ArrayList<>();
+
 
         getQuizQuestionsList();
     }
 
     private void getQuizQuestionsList()
     {
-        questionList = new ArrayList<>();
+        questionList.clear();
+        loadingDialog.startLoadingDialog();
 
-//        //add question [Demo Use]
-//        questionList.add(new Question("Question 1", "A", "B", "C","C", 2));
-//        questionList.add(new Question("Question 2", "halo", "B", "ta","C", 2));
-//        questionList.add(new Question("Question 3", "A", "ni", "C","wo", 2));
-//        questionList.add(new Question("Question 4", "A", "lol", "C","777", 2));
-//        questionList.add(new Question("Question 5", "A", "B", "test","C", 2));
+        firestore.collection("QUIZ").document(subjectList.get(selected_sub_index).getId())
+                .collection(quizzesIds.get(quizNo)).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
-        firebaseFirestore.collection("QUIZ").document("SUB" + String.valueOf(subject_id))
-                .collection("QUIZ" + String.valueOf(quizNo))
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful())
-                {
-                    QuerySnapshot questions = task.getResult();
+                        Map<String, DocumentSnapshot> docList = new ArrayMap<>();
 
-                    for(QueryDocumentSnapshot doc : questions)
-                    {
-                        questionList.add(new Question(doc.getString("QUESTION"),
-                                doc.getString("OPTION1"),
-                                doc.getString("OPTION2"),
-                                doc.getString("OPTION3"),
-                                doc.getString("OPTION4"),
-                                Integer.valueOf(doc.getString("ANSWER"))
-                        ));
+                        for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+
+                            docList.put(doc.getId(),doc);
+                        }
+
+                        QueryDocumentSnapshot questionListDoc = (QueryDocumentSnapshot) docList.get("QUESTION_LIST");
+
+                        String count =  questionListDoc.getString("COUNT");
+
+                        for(int i=0; i < Integer.valueOf(count); i++){
+
+                            String questionID= questionListDoc.getString("Q" + String.valueOf(i + 1) + "_ID");
+
+                            QueryDocumentSnapshot questionDoc = (QueryDocumentSnapshot) docList.get(questionID);
+
+                            questionList.add(new Question(
+                                    questionDoc.getString("QUESTION"),
+                                    questionDoc.getString("OPTION1"),
+                                    questionDoc.getString("OPTION2"),
+                                    questionDoc.getString("OPTION3"),
+                                    questionDoc.getString("OPTION4"),
+                                    Integer.valueOf(questionDoc.getString("ANSWER"))
+                            ));
+
+                        }
+
+                        if(questionList.size() > 0)
+                        {
+                            setQuestion();
+                        }
                     }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-                    setQuestion();
-                }
-                else
-                {
-                    Toast.makeText(QuizQuestionPage.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                        Toast.makeText(QuizQuestionPage.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                progressloadingDialog.cancel();
-            }
-        });
+                    }
+                });
 
+        loadingDialog.dismissDialog();
     }
 
     private void setQuestion()
