@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class RegisterPage extends AppCompatActivity {
 
-    EditText text_Nickname, text_Email, text_Password;
+    EditText text_Nickname, text_Email, text_Password, text_ReEnterPassword;
     CheckBox checkbox_RegisterAsTeacher;
     Button button_Register;
     private Dialog progressloadingDialog;
@@ -46,24 +46,28 @@ public class RegisterPage extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        text_Nickname = findViewById(R.id.text_Nickname);
+//        text_Nickname = findViewById(R.id.text_Nickname);
         text_Email = findViewById(R.id.text_Email);
         text_Password = findViewById(R.id.text_Password);
+        text_ReEnterPassword = findViewById(R.id.text_ReEnterPassword);
 
         checkbox_RegisterAsTeacher = findViewById(R.id.checkbox_RegisterAsTeacher);
 
         button_Register = findViewById(R.id.button_Register);
 
-        text_Nickname.setText("");
+//        text_Nickname.setText("");
         text_Email.setText("");
         text_Password.setText("");
+        text_ReEnterPassword.setText("");
 
         button_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkField(text_Nickname);
+//                checkField(text_Nickname);
                 checkField(text_Email);
                 checkField(text_Password);
+                checkField(text_ReEnterPassword);
+                checkConfirmPassword(text_Password,text_ReEnterPassword);
 
                 if(valid)
                 {
@@ -80,8 +84,8 @@ public class RegisterPage extends AppCompatActivity {
 
                                 DocumentReference documentReference = firebaseFirestore.collection("Users").document(user.getUid());
                                 Map<String, Object> userInfo = new HashMap<>();
-                                userInfo.put("NICKNAME", text_Nickname.getText().toString());
-                                userInfo.put("EMAIL", text_Nickname.getText().toString());
+//                                userInfo.put("NICKNAME", text_Nickname.getText().toString());
+                                userInfo.put("EMAIL", text_Email.getText().toString());
 
                                 if(checkbox_RegisterAsTeacher.isChecked())
                                 {
@@ -131,6 +135,21 @@ public class RegisterPage extends AppCompatActivity {
         else
         {
             valid = true;
+        }
+
+        return valid;
+    }
+
+    private boolean checkConfirmPassword(EditText password, EditText repassword)
+    {
+        if(password.getText().toString().equals(repassword.getText().toString()))
+        {
+            valid = true;
+        }
+        else
+        {
+            repassword.setError("Re-enter password is not correct");
+            valid = false;
         }
 
         return valid;

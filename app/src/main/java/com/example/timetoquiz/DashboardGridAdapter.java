@@ -64,10 +64,10 @@ public class DashboardGridAdapter extends BaseAdapter {
 
         ((TextView) view.findViewById(R.id.quizName)).setText(DashboardList.get(position).getName());
 
-        //color all textview with random color
-        Random random = new Random();
-        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-        view.setBackgroundColor(color);
+//        //color all textview with random color
+//        Random random = new Random();
+//        int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+//        view.setBackgroundColor(color);
 
         return view;
     }

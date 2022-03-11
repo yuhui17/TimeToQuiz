@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".ScorePage">
 
     <LinearLayout
@@ -13,7 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="172dp"
         android:layout_marginEnd="32dp"
-        android:background="@color/teal_200"
+        android:background="#3BBB00FF"
         android:orientation="vertical"
         android:padding="32dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
             android:id="@+id/textView_TitleScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
+            android:fontFamily="sans-serif-black"
             android:gravity="center"
             android:text="YOUR SCORE"
             android:textSize="32sp"
@@ -42,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:fontFamily="monospace"
+            android:fontFamily="serif"
             android:gravity="center"
             android:text="4/5"
             android:textSize="32sp"

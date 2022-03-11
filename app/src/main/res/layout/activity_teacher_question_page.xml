@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DFDFDF"
+    android:background="@drawable/gradient_background"
     tools:context=".TeacherQuestionPage">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/Toolbar_AddQuestionPage"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/gradient_background"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@color/white"
+        android:theme="@style/ToolbarColoredBackArrow"
+        android:background="@drawable/gradient_toolbar_background"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

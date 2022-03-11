@@ -5,13 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/gradient_background"
     tools:context=".DashboardPage">
 
    <androidx.appcompat.widget.Toolbar
        android:id="@+id/Toolbar_AddQuestionPage"
        android:layout_width="match_parent"
        android:layout_height="?attr/actionBarSize"
-       android:background="@drawable/gradient_background"
+       app:titleTextColor="@color/white"
+       app:subtitleTextColor="@color/white"
+       android:theme="@style/ToolbarColoredBackArrow"
+       android:background="@drawable/gradient_toolbar_background"
        />
 
     <GridView
@@ -22,6 +26,7 @@
         android:gravity="center"
         android:columnWidth="100dp"
         android:numColumns="1"
+        android:layout_margin="8dp"
         />
 
 </LinearLayout>
