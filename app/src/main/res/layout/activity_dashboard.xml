@@ -26,6 +26,7 @@
         android:gravity="center"
         android:columnWidth="100dp"
         android:numColumns="1"
+        android:verticalSpacing="8dp"
         android:layout_margin="8dp"
         />
 
