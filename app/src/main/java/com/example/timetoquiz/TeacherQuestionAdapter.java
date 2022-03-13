@@ -112,7 +112,7 @@ public class TeacherQuestionAdapter extends RecyclerView.Adapter<TeacherQuestion
                     dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
 
                     dialog.getButton(dialog.BUTTON_NEGATIVE).setBackgroundResource(R.drawable.button_rounded_rectangle);
-                    dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                    dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.setMargins(0,0,50,0);

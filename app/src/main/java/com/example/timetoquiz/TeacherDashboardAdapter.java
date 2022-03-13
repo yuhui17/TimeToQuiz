@@ -181,6 +181,8 @@ public class TeacherDashboardAdapter extends RecyclerView.Adapter<TeacherDashboa
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
             Map<String,Object> subDoc = new ArrayMap<>();
+
+            String removeId = null;
             int index=1;
 
             for(int i=0; i < subject_list.size(); i++)
@@ -190,6 +192,11 @@ public class TeacherDashboardAdapter extends RecyclerView.Adapter<TeacherDashboa
                     subDoc.put("SUB" + String.valueOf(index) + "_ID", subject_list.get(i).getId());
                     subDoc.put("SUB" + String.valueOf(index) + "_NAME", subject_list.get(i).getName());
                     index++;
+                }
+                else
+                {
+                    //this is the deleted id for remove the subject
+                    removeId = subject_list.get(i).getId();
                 }
             }
 
@@ -212,6 +219,22 @@ public class TeacherDashboardAdapter extends RecyclerView.Adapter<TeacherDashboa
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            //here remove the subject
+            firestore.collection("QUIZ").document(removeId)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //success
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //fail
                         }
                     });
 

@@ -92,6 +92,8 @@ public class TeacherQuizListAdapter extends RecyclerView.Adapter<TeacherQuizList
                     selected_quiz_index = pos;
 
                     Intent intent = new Intent(itemView.getContext(),TeacherQuestionPage.class);
+                    intent.putExtra("QUIZ_NUM", selected_quiz_index+1);
+
                     itemView.getContext().startActivity(intent);
                 }
             });
@@ -118,7 +120,7 @@ public class TeacherQuizListAdapter extends RecyclerView.Adapter<TeacherQuizList
                     dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
 
                     dialog.getButton(dialog.BUTTON_NEGATIVE).setBackgroundResource(R.drawable.button_rounded_rectangle);
-                    dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                    dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
 
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     params.setMargins(0,0,50,0);

@@ -47,9 +47,12 @@ public class TeacherQuestionPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_question_page);
 
+        Intent intent = getIntent();
+        int questionNum = intent.getIntExtra("QUIZ_NUM",0);
+
         Toolbar Toolbar = findViewById(R.id.Toolbar_AddQuestionPage);
         setSupportActionBar(Toolbar);
-        getSupportActionBar().setTitle("Question");
+        getSupportActionBar().setTitle("Quiz " + questionNum);
 
         recyclerview_QuestionList = findViewById(R.id.recyclerview_QuestionList);
         button_AddNewQuestion = findViewById(R.id.button_AddNewQuestion);

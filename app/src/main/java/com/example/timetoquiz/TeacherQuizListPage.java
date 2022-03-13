@@ -4,11 +4,14 @@ import static com.example.timetoquiz.LoginPage.subjectList;
 import static com.example.timetoquiz.TeacherDashboardPage.selected_sub_index;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.view.MenuItem;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -61,7 +65,26 @@ public class TeacherQuizListPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AddNewQuiz();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(view.getContext());
+                dialog.setTitle("Add New Quiz");
+                dialog.setMessage("You want to add a new quiz?");
+                dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        AddNewQuiz();
+
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
             }
         });
 
@@ -185,4 +208,5 @@ public class TeacherQuizListPage extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

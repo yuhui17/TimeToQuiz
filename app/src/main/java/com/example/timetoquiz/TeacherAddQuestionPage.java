@@ -84,14 +84,20 @@ public class TeacherAddQuestionPage extends AppCompatActivity {
                 {
                     CheckAllFieldIsEmpty();
                     if(validator){
-                        EditQuestion();
+                        CheckValidAnswerFormat();
+                        if(validator){
+                            EditQuestion();
+                        }
                     }
                 }
                 else
                 {
                     CheckAllFieldIsEmpty();
                     if(validator){
-                        AddNewQuestion();
+                        CheckValidAnswerFormat();
+                        if(validator){
+                            AddNewQuestion();
+                        }
                     }
                 }
 
@@ -245,6 +251,23 @@ public class TeacherAddQuestionPage extends AppCompatActivity {
         }
         if(StrAnswer.isEmpty()){
             text_Answer.setError("Answer cannot be empty!");
+            validator = false;
+        }
+
+        return validator;
+    }
+
+    private boolean CheckValidAnswerFormat(){
+
+        StrAnswer = text_Answer.getText().toString();
+
+        if(StrAnswer.compareTo("1") == 0 ||StrAnswer.compareTo("2") == 0 ||StrAnswer.compareTo("3") == 0 ||StrAnswer.compareTo("4") == 0)
+        {
+            validator = true;
+        }
+        else
+        {
+            Toast.makeText(TeacherAddQuestionPage.this, "Answer field should in format of 1/2/3/4 only", Toast.LENGTH_SHORT).show();
             validator = false;
         }
 
