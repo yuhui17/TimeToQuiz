@@ -50,8 +50,8 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
 //    private Dialog progressloadingDialog;
 
     //***if any changes made need to change both of this***
-    private String TimerSec = "25";    //set time text in counter
-    private int ActualTimerSec = 25000;    //set the actual counter
+    private String TimerSec = "60";    //set time text in counter
+    private int ActualTimerSec = 60000;    //set the actual counter
 
 
     @Override
@@ -180,6 +180,22 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onFinish() {
+                //color green correct answer
+                switch (questionList.get(questionNumber).getCorrectOption())
+                {
+                    case 1:
+                        quiz_option1.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                        break;
+                    case 2:
+                        quiz_option2.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                        break;
+                    case 3:
+                        quiz_option3.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                        break;
+                    case 4:
+                        quiz_option4.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                        break;
+                }
                 changeQuestion();
             }
         };
