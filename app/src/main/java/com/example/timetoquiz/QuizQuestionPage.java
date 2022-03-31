@@ -59,6 +59,8 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_question_page);
 
+        score = 0;
+
         quiz_QuestionNumber = findViewById(R.id.quiz_QuestionNumber);
         quiz_Question = findViewById(R.id.quiz_Question);
         quiz_Timer = findViewById(R.id.quiz_Timer);
@@ -216,18 +218,18 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
 
                 if (quiz_option1.isEnabled()) {
                     quiz_option1.setEnabled(false);
-
-                    selectedOption = 1;
                 }
+                selectedOption = 1;
+
                 break;
 
             case R.id.quiz_option2:
 
                 if (quiz_option2.isEnabled()) {
                     quiz_option2.setEnabled(false);
-
-                    selectedOption = 2;
                 }
+                selectedOption = 2;
+
                 break;
 
             case R.id.quiz_option3:
@@ -235,16 +237,16 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
                 if (quiz_option3.isEnabled()) {
                     quiz_option3.setEnabled(false);
 
-                    selectedOption = 3;
                 }
+                selectedOption = 3;
+
                 break;
 
             case R.id.quiz_option4:
                 if (quiz_option4.isEnabled()) {
                     quiz_option4.setEnabled(false);
-
-                    selectedOption = 4;
                 }
+                selectedOption = 4;
                 break;
 
             default:
@@ -279,6 +281,7 @@ public class QuizQuestionPage extends AppCompatActivity implements View.OnClickL
             //color green correct answer
             ((Button)view).setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
             score++;
+            score = score;
         }
         else
         {
